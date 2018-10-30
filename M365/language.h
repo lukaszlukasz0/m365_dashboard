@@ -18,8 +18,8 @@
   // ------------------------------------------------
   const char confScr7[] PROGMEM = {"Zapisz i wyjdz"};       //    const char confScr7[] PROGMEM = {"Save and exit"};
 
-  const char infoScr1[] PROGMEM = {"Calkowity Przebieg:"};        //    const char infoScr1[] PROGMEM = {"Total distance"};
-  const char infoScr2[] PROGMEM = {"Czas dzialania:"};       //    const char infoScr2[] PROGMEM = {"Power on time"};
+  const char infoScr1[] PROGMEM = {"Calkowity Przebieg"};        //    const char infoScr1[] PROGMEM = {"Total distance"};
+  const char infoScr2[] PROGMEM = {"Czas dzialania"};       //    const char infoScr2[] PROGMEM = {"Power on time"};
 
   const char battScr[] PROGMEM = {">>  Wyjdz Hamulcem <<"}; //    const char battScr[] PROGMEM = {">>> Brake to exit <<<"};
 
