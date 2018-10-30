@@ -5,13 +5,13 @@
   const char noBUS3[] PROGMEM = {"   Brak"};
   const char noBUS4[] PROGMEM = {"  danych !"}; 
 
-  const char confScr1[] PROGMEM = {"Hibernacja"};    //    const char confScr1[] PROGMEM = {"Big speedometer: "};
-  const char confScr2[] PROGMEM = {"Duży wyswi.: "};        //    const char confScr2[] PROGMEM = {"Big speedo.: "};
+  const char confScr1[] PROGMEM = {"Hibernacja     : "};    //    const char confScr1[] PROGMEM = {"Big speedometer: "};
+  const char confScr2[] PROGMEM = {"Duzy wyswi.: "};        //    const char confScr2[] PROGMEM = {"Big speedo.: "};
   const char confScr2a[] PROGMEM = {"PREKOSC"};             //    const char confScr2a[] PROGMEM = {"  SPEED"};
   const char confScr2b[] PROGMEM = {"   PRAD"};             //    const char confScr2b[] PROGMEM = {"CURRENT"};
   const char confScr2c[] PROGMEM = {" WYLACZ"};             //    const char confScr2b[] PROGMEM = {"CURRENT"};
   
-  const char confScr3[] PROGMEM = {"Info. o baterii: "};    //    const char confScr3[] PROGMEM = {"Battery warning: "};
+  const char confScr3[] PROGMEM = {"Ostrzezenie bat: "};    //    const char confScr3[] PROGMEM = {"Battery warning: "};
   const char confScr4[] PROGMEM = {"Duze info bat. : "};     //   const char confScr4[] PROGMEM = {"Big batt. warn.: "};
   const char confScr5[] PROGMEM = {"Szczegoly Baterii"};    //    const char confScr5[] PROGMEM = {"Battery info"};
   const char confScr6[] PROGMEM = {"Ustawienia M365"};       //   const char confScr6[] PROGMEM = {"Configure M365"};
@@ -23,17 +23,17 @@
 
   const char battScr[] PROGMEM = {">>  Wyjdz Hamulcem <<"}; //    const char battScr[] PROGMEM = {">>> Brake to exit <<<"};
 
-  const char M365CfgScr1[] PROGMEM = {"Cruise control: "};  //    const char M365CfgScr1[] PROGMEM = {"Cruise control: "};
-  const char M365CfgScr2[] PROGMEM = {"Update Cruise"};     //    const char M365CfgScr2[] PROGMEM = {"Update Cruise"};
-  const char M365CfgScr3[] PROGMEM = {"Tailight on:    "};  //    const char M365CfgScr3[] PROGMEM = {"Tailight on:    "};
-  const char M365CfgScr4[] PROGMEM = {"Update Tailight"};   //    const char M365CfgScr4[] PROGMEM = {"Update Tailight"};
-  const char M365CfgScr5[] PROGMEM = {"KERS:        "};     //    const char M365CfgScr5[] PROGMEM = {"KERS:        "};
-  const char M365CfgScr6[] PROGMEM = {"Update KERS"};       //    const char M365CfgScr6[] PROGMEM = {"Update KERS"};
-  const char M365CfgScr8[] PROGMEM = {"Exit"};              //    const char M365CfgScr8[] PROGMEM = {"Exit"};
-  const char M365CfgScr7[] PROGMEM = {"Wheel Size:     "};  //    const char M365CfgScr7[] PROGMEM = {"Wheel Size:     "};
-
-  const char l_85inch[] PROGMEM = {" 8,5\" "};
-  const char l_10inch[] PROGMEM = {"  10\" "};
+  const char M365CfgScr1[] PROGMEM = {"Tempomat       : "};  //    const char M365CfgScr1[] PROGMEM = {"Cruise control: "};
+  const char M365CfgScr2[] PROGMEM = {"Zaktualizuj tempomat"};     //    const char M365CfgScr2[] PROGMEM = {"Update Cruise"};
+  const char M365CfgScr3[] PROGMEM = {"Lampka tylna :   "};  //    const char M365CfgScr3[] PROGMEM = {"Tailight on:    "};
+  const char M365CfgScr4[] PROGMEM = {"Zaktualizuj lampa"};   //    const char M365CfgScr4[] PROGMEM = {"Update Tailight"};
+  const char M365CfgScr5[] PROGMEM = {"KERS :        "};     //    const char M365CfgScr5[] PROGMEM = {"KERS:        "};
+  const char M365CfgScr6[] PROGMEM = {"Zaktualizuj KERS"};       //    const char M365CfgScr6[] PROGMEM = {"Update KERS"};
+  const char M365CfgScr8[] PROGMEM = {"Wyjscie"};              //    const char M365CfgScr8[] PROGMEM = {"Exit"};
+  const char M365CfgScr7[] PROGMEM = {"Rozmiar kola  : "};  //    const char M365CfgScr7[] PROGMEM = {"Wheel Size:     "};
+  
+  const char l_85inch[] PROGMEM = {"8,5\" "};
+  const char l_10inch[] PROGMEM = {" 10\" "};
 
   const char l_Weak[] PROGMEM =   {" SLABY"}; //const char l_Weak[] PROGMEM =   {"  WEAK"};
   const char l_Medium[] PROGMEM = {"SREDNI"}; //const char l_Medium[] PROGMEM = {"MEDIUM"};
@@ -56,4 +56,3 @@
   const char hibernate_info2[] PROGMEM = {"Zaktualizuj"};
   const char hibernate_info3[] PROGMEM = {"soft skutera"};
   const char hibernate_info4[] PROGMEM = {"po Bluetooth"};
-
