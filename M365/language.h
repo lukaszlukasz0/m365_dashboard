@@ -52,7 +52,4 @@
   const char l_c[] PROGMEM = {"C"};
   const char l_t[] PROGMEM = {"T"}; 
 
-  const char hibernate_info1[] PROGMEM = {" Hibernacja "};
-  const char hibernate_info2[] PROGMEM = {"Zaktualizuj"};
-  const char hibernate_info3[] PROGMEM = {"soft skutera"};
-  const char hibernate_info4[] PROGMEM = {"po Bluetooth"};
+  const char hibernate_info1[] PROGMEM = {"Hibernacja!"};
