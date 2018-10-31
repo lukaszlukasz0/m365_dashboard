@@ -19,6 +19,11 @@ void WDTint_() {
 
 void setup() {
   XIAOMI_PORT.begin(115200);
+  //test-------------------
+  /*
+  pinMode(7, INPUT_PULLUP); //Przycisk jako wejście
+  pinMode(8, INPUT_PULLUP); //Przycisk jako wejście
+   */
 
   byte cfgID = EEPROM.read(0);
   if (cfgID == 128) {
@@ -50,14 +55,17 @@ void setup() {
   display.setCursor(0, 0);
   display.print((char)0x20);
   display.setFont(defaultFont);
-
+  /* test 
+  displayClear(1);
+  _NewDataFlag=1;
+  */
   unsigned long wait = millis() + 2000;
   while ((wait > millis()) || ((wait - 1000 > millis()) && (S25C31.current != 0) && (S25C31.voltage != 0) && (S25C31.remainPercent != 0))) {
     dataFSM();
     if (_Query.prepared == 0) prepareNextQuery();
     Message.Process();
   }
-
+    
   if ((S25C31.current == 0) && (S25C31.voltage == 0) && (S25C31.remainPercent == 0)) {
     displayClear(1);
     display.set2X();
@@ -74,7 +82,48 @@ void setup() {
 }
 
 void loop() { //cycle time w\o data exchange ~8 us :)
-  dataFSM();
+dataFSM();
+
+
+/*
+//test--------------------------------------------------------
+if (digitalRead(7) == LOW) { //Jeśli przycisk wciśnięty
+    S20C00HZ65.brake = 200;
+    _NewDataFlag=1;
+  } else { 
+    _NewDataFlag=1;
+    S20C00HZ65.brake = 5;
+  };
+display.setCursor(0, 5);
+if (digitalRead(8) == LOW) { //Jeśli przycisk wciśnięty
+    S20C00HZ65.throttle = 200;
+    _NewDataFlag=1;
+  } else {
+    S20C00HZ65.throttle = 5;
+    _NewDataFlag=1;
+  };
+
+if ( XIAOMI_PORT.available() > 0) {
+                test =  XIAOMI_PORT.parseInt();
+                XIAOMI_PORT.write(test); 
+                S23CB0.speed=(int)test;
+                //_NewDataFlag=1;
+} else { 
+  S23CB0.speed=(int)test; 
+};
+S23CB0.averageSpeed=10000;       // /1000
+S23CB0.mileageTotal=10000;       // /1000
+S23CB0.mileageCurrent=100;     // /100
+S23CB0.elapsedPowerOnTime=10; //time from power on, in seconds
+S23CB0.mainframeTemp=100;      // /10
+S25C31.remainCapacity=7500;     //remaining capacity mAh
+S25C31.remainPercent=80;      //charge in percent
+S25C31.current=5;            //current        /100 = A
+S25C31.voltage=350;            //batt voltage   /100 = V
+S25C31.temp1=20;              //-=20
+S25C31.temp2=20;              //-=20
+//test---------------------------------------------------------
+*/
 
   if (_Query.prepared == 0) prepareNextQuery();
 
@@ -82,7 +131,6 @@ void loop() { //cycle time w\o data exchange ~8 us :)
     _NewDataFlag = 0;
     displayFSM();
   }
-
   Message.Process();
   Message.ProcessBroadcast();
 
@@ -225,16 +273,21 @@ void displayFSM() {
 
   int tmp_0, tmp_1;
   
-  //Custom Wheel size.
-  float _speed;
-  _speed = abs(S23CB0.speed);
-  
+  long c_speed; //current speed
+
+  // CURRENT SPEED CALCULATE ALGORYTHM
+  if (S23CB0.speed < -10000) {// If speed if more than 32.767 km/h (32767)
+    c_speed = S23CB0.speed + 32768 + 32767; // calculate speed over 32.767 (hex 0x8000 and above) add 32768 and 32767 to conver to unsigned int
+  } else {
+    c_speed = abs(S23CB0.speed); }; //always + speed, even drive backwards ;)
+
+  // 10 INCH WHEEL SIZE CALCULATE
   if (WheelSize) {
-    _speed = _speed * 10 / 8.5; // 10" Whell
-  }; 
-  
-  m365_info.sph = (unsigned int) _speed / 1000;                  // speed
-  m365_info.spl = (unsigned int) _speed % 1000 / 100;
+    c_speed = (long) c_speed * 10 / 8.5; // 10" Whell
+   };
+ 
+  m365_info.sph = (unsigned long) abs(c_speed) / 1000L; // speed (GOOD)
+  m365_info.spl = (unsigned int) c_speed % 1000 / 100;
   m365_info.curh = abs(S25C31.current) / 100;       //current 
   //m365_info.curh = S25C31.current / 100;       //current //testing only
   m365_info.curl = abs(S25C31.current) % 100;
@@ -247,7 +300,7 @@ void displayFSM() {
     Settings = false;
   }
 
-  if ((S23CB0.speed <= 200) || Settings) {
+  if ((c_speed <= 200) || Settings) {
     if (S20C00HZ65.brake > 130)
     brakeVal = 1;
       else
@@ -335,6 +388,7 @@ void displayFSM() {
 
       if (displayClear(7)) sMenuPos = 0;
       display.set1X();
+      //MENU 1
       display.setCursor(0, 0);
 
       if (sMenuPos == 0)
@@ -347,7 +401,7 @@ void displayFSM() {
         display.print((const __FlashStringHelper *) l_On);
         else
         display.print((const __FlashStringHelper *) l_Off);
-
+      //MENU 2
       display.setCursor(0, 1);
 
       if (sMenuPos == 1)
@@ -356,7 +410,7 @@ void displayFSM() {
         display.print(" ");
 
       display.print((const __FlashStringHelper *) M365CfgScr2);
-
+      //MENU 3
       display.setCursor(0, 2);
 
       if (sMenuPos == 2)
@@ -369,7 +423,7 @@ void displayFSM() {
         display.print((const __FlashStringHelper *) l_Yes);
         else
         display.print((const __FlashStringHelper *) l_No);
-
+      //MENU 4
       display.setCursor(0, 3);
 
       if (sMenuPos == 3)
@@ -378,7 +432,7 @@ void displayFSM() {
         display.print(" ");
 
       display.print((const __FlashStringHelper *) M365CfgScr4);
-
+      //MENU 5
       display.setCursor(0, 4);
 
       if (sMenuPos == 4)
@@ -398,7 +452,7 @@ void displayFSM() {
           display.print((const __FlashStringHelper *) l_Weak);
           break;
       }
-
+    //MENU 6
     display.setCursor(0, 5);
 
       if (sMenuPos == 5)
@@ -407,7 +461,7 @@ void displayFSM() {
         display.print(" ");
 
       display.print((const __FlashStringHelper *) M365CfgScr6);
-
+    //MENU 7
     display.setCursor(0, 6);
     
     if (sMenuPos == 6)
@@ -430,7 +484,7 @@ void displayFSM() {
         display.setCursor(i * 5, 6);
         display.print('-');
       }*/
-
+      //MENU 8 EXIT
       display.setCursor(0, 7);
       
       if (sMenuPos == 7)
@@ -478,17 +532,17 @@ void displayFSM() {
           break;
         case 1:
           switch (bigMode) {
+            case 0: //speed
+              bigMode = 1;
+              autoBig = true;
+              break;
             case 1:   //current
-              bigMode = 0;
+              bigMode = 2;
               autoBig = true;
               break;
             case 2: //no big display
               bigMode = 0;
               autoBig = false;
-              break;
-            default: //speed
-              bigMode = 0;
-              autoBig = true;
           }
           break;
         case 2:
@@ -521,17 +575,6 @@ void displayFSM() {
           EEPROM.put(3, bigMode);
           EEPROM.put(4, bigWarn);
           Settings = false;
-          if (hibernate == true) {
-                displayClear(3);
-                display.set2X();
-                display.setFont(defaultFont);
-                display.setCursor(0, 0);
-                display.println((const __FlashStringHelper *) hibernate_info1);
-                display.println((const __FlashStringHelper *) hibernate_info2);
-                display.println((const __FlashStringHelper *) hibernate_info3);
-                display.println((const __FlashStringHelper *) hibernate_info4);
-                display.set1X();
-          }
           break;
       } else
       if ((brakeVal == 1) && (oldBrakeVal != 1) && (throttleVal == -1) && (oldThrottleVal == -1)) {               // brake max + throttle min = change menu position
@@ -568,13 +611,13 @@ void displayFSM() {
       display.print((const __FlashStringHelper *) confScr2);
       switch (bigMode) {
         case 1:
-          display.print((const __FlashStringHelper *) confScr2b); //current
+          display.print((const __FlashStringHelper *) confScr2b); 
           break;
         case 2:
-          display.print((const __FlashStringHelper *) confScr2c); //no big display
+          display.print((const __FlashStringHelper *) confScr2a); 
           break;
-        default:
-          display.print((const __FlashStringHelper *) confScr2a); //speed
+        case 0:
+          display.print((const __FlashStringHelper *) confScr2c); 
       }
 
       display.setCursor(0, 2);
@@ -743,7 +786,7 @@ void displayFSM() {
           display.setCursor(64, 5);
           display.print((char)0x85);
           break;
-        default:
+        case 2:
           display.setFont(bigNumb);
           tmp_0 = m365_info.sph / 10;
           tmp_1 = m365_info.sph % 10;
@@ -765,7 +808,7 @@ void displayFSM() {
       }
       showBatt(S25C31.remainPercent, S25C31.current < 0);
     } else {
-      if ((S25C31.current < -100) && (S23CB0.speed <= 200)) {
+      if ((S25C31.current < -100) && (c_speed <= 200)) {
         fsBattInfo();
       } else {
         displayClear(0);
@@ -825,10 +868,22 @@ void displayFSM() {
         display.print(m365_info.curl);
         display.setFont(defaultFont);
         display.print((const __FlashStringHelper *) l_a);
+        
       }
 
+      if (hibernate == true) {
+                //displayClear(0);
+                display.set2X();
+                display.setFont(defaultFont);
+                display.setCursor(0, 6);
+                display.println((const __FlashStringHelper *) hibernate_info1);
+                display.set1X();
+       } else {
       showBatt(S25C31.remainPercent, S25C31.current < 0);
+      }
     }
+           
+
 }
 
 // -----------------------------------------------------------------------------------------------------------
