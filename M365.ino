@@ -938,7 +938,7 @@ void displayFSM() {
                 displayClear(0);
                 display.setFont(m365);
                 display.setCursor(0, 0);
-                display.print((char)0x23);
+                display.print((char)0x22);
                 display.setFont(defaultFont);
           }
       } else {
