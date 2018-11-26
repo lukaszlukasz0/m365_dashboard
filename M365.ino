@@ -540,8 +540,14 @@ void displayFSM()
           default:
             prepareCommand(CMD_WEAK);
           };
-          EEPROM.put(5, WheelSize);
-          EEPROM.put(9, wtemp);
+              EEPROM.put(5, WheelSize);
+              EEPROM.put(6, cfgCruise);
+              EEPROM.put(7, cfgTailight);
+              EEPROM.put(8, cfgKERS);
+              EEPROM.put(9, wtemp);
+              EEPROM.put(10, LockCode1);
+              EEPROM.put(11, LockCode2);
+              EEPROM.put(12, LockCode3);
           oldBrakeVal = brakeVal;
           oldThrottleVal = throttleVal;
           timer = millis() + LONG_PRESS;
