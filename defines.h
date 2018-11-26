@@ -31,14 +31,16 @@ const unsigned int LONG_PRESS = 2000;
 byte warnBatteryPercent = 5;
 
 bool autoBig = true;
-byte bigMode = 0;
+byte bigMode = 1;
 bool bigWarn = true;
 
 bool Settings = false;
 bool ShowBattInfo = false;
 bool M365Settings = false;
-bool locked = false;
+bool SetNewCode = false;
+bool SetCode=  false;
 
+bool wtemp = true;
 byte menuPos = 0;
 byte sMenuPos = 0;
 
@@ -46,13 +48,21 @@ bool cfgCruise = false;
 bool cfgTailight = false;
 byte cfgKERS = 0;
 
-volatile int Headlamp = 0;
+bool locked = false;
+byte LockCode1 = 1;
+byte LockCode2 = 2;
+byte LockCode3 = 3;
+byte num1 = 0;
+byte num2 = 0;
+byte num3 = 0;
+byte active = 1;
+
+bool Headlamp = 0;
 volatile int oldBrakeVal = -1;
 volatile int oldThrottleVal = -1;
 volatile int oldHeadlamp = 0;
 
 unsigned long timer = 0; 
-unsigned long lock_timer = 0; 
 
 #ifdef DISPLAY_SPI
 SSD1306AsciiSpi display;
@@ -172,7 +182,7 @@ struct __attribute__((packed))A23C3E {
 struct __attribute__((packed))A23CB0 {
   //32 bytes;
   unsigned char u1[2];
-  unsigned char move; // 9-whentheattempt tomovewiththeunit.
+  unsigned char move; // 9-when the attempt to move with the unit.
   unsigned char u2;
   unsigned char locks; //2 -when the scooter locks. 6 - when the attempt to move with the unit.
   unsigned char u3[3];
