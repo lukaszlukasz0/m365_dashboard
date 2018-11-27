@@ -5,7 +5,8 @@
 // and I only make some addons ;) (PL Lang, WheelSize, Lock Code, Battery 12s ...)
 
 #include "defines.h"
-char sv[4] = "1.40";
+char sv[4] = "1.41";
+// 1.41 Lock image fix
 // 1.40 12s battery info on fsbattinfo, if only 10s then display exit info.
 // 1.39 lock code info bug fixed - lock/unlock code works !
 // 1.35 lock info more
