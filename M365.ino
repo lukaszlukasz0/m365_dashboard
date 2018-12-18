@@ -1,12 +1,16 @@
 // First Developer made hard work with dataFSM - https://electro.club/forum/displey_dlya_syaokata 
 // and his version on GitHub https://github.com/fogbox/m365_display
-// Second Developer _xxx_ made such nice Menu and fix bugs. Thanks to him it works very good, and looks like good.
+// Second Developer _xxx_ made such nice Menu, nice Font and fix bugs(cruise control). Thanks to him it works very good, and looks very good.
 // Third Augisbud, make languages support and fix https://github.com/augisbud/m365_dashboard
+// help him "Trankilloman" and "Саша" sasha1804sk@gmail.com and nebman(remove custom library, add fonts to project)
 // and I only make some addons ;) (PL Lang, WheelSize, Lock Code, Battery 12s ...)
 
 #include "defines.h"
-char sv[4] = "1.41";
+char sv[4] = "1.43";
+// 1.43 fix light and cruise control settings in menu
+// 1.42 nobus, display sv
 // 1.41 Lock image fix
+// 		image generator http://www.majer.ch/lcd/adf_bitmap.php
 // 1.40 12s battery info on fsbattinfo, if only 10s then display exit info.
 // 1.39 lock code info bug fixed - lock/unlock code works !
 // 1.35 lock info more
@@ -14,7 +18,7 @@ char sv[4] = "1.41";
 // 1.31: bugs
 // 1.30: unlock Code 3digit
 // 1.25 temp battery
-// 1.2: Lock, save settings m365
+// 1.2: Lock, save settings m365.
 // 1.1: Hibernate
 // 1.0: Wheel size
 
@@ -114,6 +118,9 @@ void setup()
     display.println((const __FlashStringHelper *)noBUS3);
     display.println((const __FlashStringHelper *)noBUS4);
     display.set1X();
+    display.setCursor(0, 7);
+    display.print("v");
+    display.print(sv); //Software info
   }
   else
     displayClear(1);
@@ -492,9 +499,17 @@ void displayFSM()
         {
         case 0: //------------------------------------------------------------------------------
           cfgCruise = !cfgCruise;
+          if (cfgCruise)
+            prepareCommand(CMD_CRUISE_ON);
+          else
+            prepareCommand(CMD_CRUISE_OFF);
           break;
         case 1: //------------------------------------------------------------------------------
           cfgTailight = !cfgTailight;
+          if (cfgTailight)
+            prepareCommand(CMD_LED_ON);
+          else
+            prepareCommand(CMD_LED_OFF);
           break;
         case 2: //------------------------------------------------------------------------------
           switch (cfgKERS)
@@ -508,6 +523,15 @@ void displayFSM()
           default:
             cfgKERS = 1;
           }
+          switch (cfgKERS)
+          {
+          case 1:
+            prepareCommand(CMD_MEDIUM);
+          case 2:
+            prepareCommand(CMD_STRONG);
+          default:
+            prepareCommand(CMD_WEAK);
+          };
           break;
         case 3: //------------------------------------------------------------------------------
           WheelSize = !WheelSize;
@@ -522,25 +546,6 @@ void displayFSM()
         case 6: //------------------------------------------------------------------------------
           break;
         case 7: //SAVE AND EXIT-----------------------------------------------------------------------
-          if (cfgCruise)
-            prepareCommand(CMD_CRUISE_ON);
-          else
-            prepareCommand(CMD_CRUISE_OFF);
-
-          if (cfgTailight)
-            prepareCommand(CMD_LED_ON);
-          else
-            prepareCommand(CMD_LED_OFF);
-
-          switch (cfgKERS)
-          {
-          case 1:
-            prepareCommand(CMD_MEDIUM);
-          case 2:
-            prepareCommand(CMD_STRONG);
-          default:
-            prepareCommand(CMD_WEAK);
-          };
               EEPROM.put(5, WheelSize);
               EEPROM.put(6, cfgCruise);
               EEPROM.put(7, cfgTailight);
