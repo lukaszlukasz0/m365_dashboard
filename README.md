@@ -1,18 +1,31 @@
 # miDisplay - Xiaomi m365
 # Change Log
 1.43 fix light and cruise control settings in menu
+
 1.42 nobus, display sv
+
 1.41 Lock image fix
- 		image generator http://www.majer.ch/lcd/adf_bitmap.php
+
+image generator http://www.majer.ch/lcd/adf_bitmap.php
+
 1.40 12s battery info on fsbattinfo, if only 10s then display exit info.
+
 1.39 lock code info bug fixed - lock/unlock code works !
+
 1.35 lock info more
+
 1.32  lock info
+
 1.31: bugs
+
 1.30: unlock Code 3digit
+
 1.25 temp battery
+
 1.2: Lock, save settings m365.
+
 1.1: Hibernate
+
 1.0: Wheel size
 
 # Products Used  
@@ -57,8 +70,14 @@ More pictures are coming soon.
 
 # Contributors
 First Developer made hard work with dataFSM - https://electro.club/forum/displey_dlya_syaokata 
+
 and his version on GitHub https://github.com/fogbox/m365_display
+
 Second Developer _xxx_ made such nice Menu, nice Font and fix bugs(cruise control). Thanks to him it works very good, and looks very good.
+
 Third Augisbud, make languages support and fix https://github.com/augisbud/m365_dashboard
+
 help him "Trankilloman" and "Саша" sasha1804sk@gmail.com and nebman(remove custom library, add fonts to project)
+
 and I only make some addons ;) (PL Lang, WheelSize, Lock Code, Battery 12s ...)
+
